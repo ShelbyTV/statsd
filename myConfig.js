@@ -5,8 +5,8 @@ Required Variables:
   graphiteHost:     hostname or IP of Graphite server
   graphitePort:     port of Graphite server
   port:             StatsD listening port [default: 8125]
-  redis_host:       Redis host [default: localhost]
-  redis_port:       Redis port [default: 6137]
+  mongo_host:       Mongo host 
+  mongo_port:       Mongo port 
 
 Optional Variables:
 
@@ -22,6 +22,6 @@ Optional Variables:
   graphitePort: 2003
 , graphiteHost: "33.33.33.10"
 , port: 8125
-, redis_host: 'localhost'
-, redis_port: '6137'
+, mongo_host: 'localhost'
+, mongo_port: '27017'
 }
