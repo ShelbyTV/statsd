@@ -18,16 +18,27 @@ When stats of this nature are picked up by the Statsd node process, a document i
 
 Here is the list of actions that I have coded into the web app:
 * *signin*
+
 * *watch*
+
 * *like*	
+
 * *watch_later*
+
 * *twitter_post*
+
 * *facebook_post*
+
 * *tumblr_post*
+
 * *email_send*
+
 * *add_twitter*
+
 * *add_facebook*
+
 * *add_tumblr*
+
 * *bookmarklet*
 
 
