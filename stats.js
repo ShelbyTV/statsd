@@ -102,7 +102,7 @@ config.configFile(process.argv[2], function (config, oldConfig) {
 						/* This is where we check if a UID existed in the namespace and if so	 */
 						/* store it in mongo appropriatly																			 */
 						/***********************************************************************/
-						if (uid){
+						if (uid && action){
 							var d = new Date;
 							var collection_name = 'Daily:'+d.getFullYear()+(d.getMonth()+1)+d.getDate();
 							db_client.createCollection(collection_name, function(err,collection){
