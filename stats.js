@@ -45,16 +45,30 @@ config.configFile(process.argv[2], function (config, oldConfig) {
 	      if (config.dumpMessages) { sys.log(msg.toString()); }
 	      var bits = msg.toString().split(':');  			// ex: "gorets:1|c|@0.1"
 
-				/*
-					checking if a UID was passed into namespace via a backslash
-					e.g. stats.app.metric/UID
-				*/
-				split_bits = bits[0].split('/');
+				/***********************************************************************/
+				/*	checking if a UID was passed into namespace via a '/?'						 */
+				/*	e.g. stats.app.metric/?uid=UID&action=ACTION											 */
+				/***********************************************************************/
+				split_bits = bits[0].split('/?');
 				bits[0] = split_bits[0];
-				var uid = null;
-				if (split_bits[1]) { uid = split_bits[1]; }
+				var uid = null, action = null, params = null;
+				if (split_bits[1]) {
+					params =  split_bits[1].split("&");
+					for (p in params) {
+						var param_split = params[p].split("=");
+						switch (param_split[0]){
+							case "uid":
+								uid = param_split[1];
+								break;
+							case "action":
+								action = param_split[1];
+								break;
+						}
+					}
+				}
+				/***********************************************************************/
 				
-	      var key = bits.shift() 											// ex:gorets
+        var key = bits.shift() 																					// ex:gorets
 	                    .replace(/\s+/g, '_')
 	                    .replace(/\//g, '-')
 	                    .replace(/[^a-zA-Z_\-0-9\.]/g, '');
@@ -88,16 +102,15 @@ config.configFile(process.argv[2], function (config, oldConfig) {
 						/* This is where we check if a UID existed in the namespace and if so	 */
 						/* store it in mongo appropriatly																			 */
 						/***********************************************************************/
-						if (uid){ // TODO: ADD REGEX TO CHECK FOR UID ?
+						if (uid){
 							var d = new Date;
 							var collection_name = 'Daily:'+d.getFullYear()+(d.getMonth()+1)+d.getDate();
 							db_client.createCollection(collection_name, function(err,collection){
 								if (err){ console.log("[STATSD] ERROR: error creating or finding collection"); }
-								/* determine the stat to write to mongo */
-								var doc = {};
-								doc[key.split('.').pop()] = 1;
+								/* create doc to insert/update */
+								var doc = {}; doc[action] = 1;
 								/* insert or update the relevant element of the document */
-								collection.update( {_id: uid}, {$inc: doc}, {upsert: true});
+								collection.update( {_id: uid}, {$inc: doc}, {upsert: true} );
 							});
 						}
 						/***********************************************************************/

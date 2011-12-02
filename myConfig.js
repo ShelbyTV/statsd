@@ -22,6 +22,5 @@ Optional Variables:
   graphitePort: 2003
 , graphiteHost: "33.33.33.10"
 , port: 8125
-, mongo_host: 'localhost'
-, mongo_port: '27017'
+, flushInterval: 1000
 }
