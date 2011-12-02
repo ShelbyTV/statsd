@@ -7,7 +7,7 @@ var dgram  = require('dgram')
 	, Db = mongo.Db;
 
 /* {strict:false} allows us to call db.collection(name) and if name is not a collection, it creates it, else returns it */
-var db_conn = new Db('gozar', new Server('localhost', '27017', {auto_reconnect:true}), {native_parser:false}, {strict:false});	
+var db_conn = new Db('DailyActivity', new Server('localhost', '27017', {auto_reconnect:true}), {native_parser:false}, {strict:false});	
 
 
 var counters = {};
@@ -44,7 +44,7 @@ config.configFile(process.argv[2], function (config, oldConfig) {
 	    server = dgram.createSocket('udp4', function (msg, rinfo) {
 	      if (config.dumpMessages) { sys.log(msg.toString()); }
 	      var bits = msg.toString().split(':');  			// ex: "gorets:1|c|@0.1"
-
+        console.log("bits: ", bits);
 				/***********************************************************************/
 				/*	checking if a UID was passed into namespace via a '/?'						 */
 				/*	e.g. stats.app.metric/?uid=UID&action=ACTION											 */
@@ -190,7 +190,7 @@ config.configFile(process.argv[2], function (config, oldConfig) {
 	      var key;
 
 	      for (key in counters) {																											// This is where counters formatted for Graphite
-	        var value = counters[key] / (flushInterval / 1000);
+	        var value = counters[key] / (flushInterval / 10000);
 	        var message = 'stats.' + key + ' ' + value + ' ' + ts + "\n";
 	        message += 'stats_counts.' + key + ' ' + counters[key] + ' ' + ts + "\n";
 	        statString += message;

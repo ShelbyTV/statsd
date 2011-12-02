@@ -22,5 +22,4 @@ Optional Variables:
   graphitePort: 2003
 , graphiteHost: "33.33.33.10"
 , port: 8125
-, flushInterval: 1000
 }
