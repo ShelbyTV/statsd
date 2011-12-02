@@ -17,6 +17,7 @@ eg: `'stats.app.broadcast.watch/?uid=123456&action=watch'`
 When stats of this nature are picked up by the Statsd node process, a document is either *inserted or updated* in a Mongo collection (that is date specific).  This will allow us to get a count of "active" users for every given day AND has the added feature of storing the actions that each user takes on each day
 
 Here is the list of actions that I have coded into the web app:
+
 * *signin*
 
 * *watch*
