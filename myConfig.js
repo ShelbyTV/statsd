@@ -5,8 +5,6 @@ Required Variables:
   graphiteHost:     hostname or IP of Graphite server
   graphitePort:     port of Graphite server
   port:             StatsD listening port [default: 8125]
-  mongo_host:       Mongo host 
-  mongo_port:       Mongo port 
 
 Optional Variables:
 
