@@ -116,7 +116,7 @@ config.configFile(process.argv[2], function (config, oldConfig) {
 								/* create doc to insert/update */
 								var doc = {}; doc[action] = 1;
 								/* insert or update the relevant element of the document */
-								collection.update( {_id: uid}, {$inc: doc}, {upsert: true} );
+								collection.update( {_id: new ObjectID(uid)}, {$inc: doc}, {upsert: true} );
 							});
 						}
 						/***********************************************************************/
